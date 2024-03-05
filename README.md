@@ -1,26 +1,44 @@
-# ao-ico
+# Profitable Jetton
 
-## Project structure
+Mint of 100 total_coins from Jetton Minter to Jetton Wallets
 
--   `contracts` - source code of all the smart contracts of the project and their dependencies.
--   `wrappers` - wrapper classes (implementing `Contract` from ton-core) for the contracts, including any [de]serialization primitives and compilation functions.
--   `tests` - tests for the contracts.
--   `scripts` - scripts used by the project, mainly the deployment scripts.
+> JW A coin_balance = 20
+> JW B coin_balance = 40
+> JW C coin_balance = 40 (DEX)
 
-## How to use
+1000 TON come to Jetton Minter from Routing Pool
 
-### Build
+> Add 0:1000 TON to dividend_income_dict
+> Jetton Minter Balance = 1000 TON
 
-`npx blueprint build` or `yarn blueprint build`
+JW A sends msg with current_coins_amount to JM to get dividend income
 
-### Test
+> 1000 TON / 100 total_coins * 20 current_coins_amount = 200 TON comes to JW A
+> JW A repaid_profit_dict: 0:200
+> Jetton Minter Balance = 800 TON
 
-`npx blueprint test` or `yarn blueprint test`
+2000 TON come to Jetton Minter from Routing Pool
 
-### Deploy or run another script
+> Add 2:2000 TON to dividend_income_dict
+> profits_dict: 0:1000, 1:2000
+> Jetton Minter Balance = 2800 TON
 
-`npx blueprint run` or `yarn blueprint run`
+JW A sends msg with current_coins_amount to JM to get dividend income:
 
-### Add a new contract
+> (1000 TON + 2000 TON) / 100 total_coins * 40 current_coins_amount = 1200 TON to JW B
+> JW B repaid_profit_dict: 0:400, 1:800
+> Jetton Minter Balance = 1600 TON
 
-`npx blueprint create ContractName` or `yarn blueprint create ContractName`
+JW A sells 10 coins to JW B
+
+> JW A transfers 10 coins to JW C
+> JW A Coin Balance = 10
+> JW A repaid_profit_dict: 0:100
+> JW C Coin Balance = 10
+> JW C repaid_profit_dict: 0:100
+> JW B sends payment for coin to JW C
+> JW C transfers 10 coins to JW B
+> JW C Coin Balance = 0
+> JW C repaid_profit_dict: 0:0
+> JW B Coin Balance = 50
+> JW B repaid_profit_dict: 0:500, 1:800
